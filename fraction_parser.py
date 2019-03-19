@@ -6,7 +6,7 @@ class FractionParser:
     divide_reg = r"((\d+\/\d+)|\d+)|[+\-\/*]"
     inner_parenth_reg = r"\([^()]+\)"
     final_reg = r"^\d+\/\d+|\d$"
-    valid_reg = r"^-?(\d+\/\d+|\d)( ?[\-*/+] ?-?(\d+\/\d+|\d))* ?$"
+    valid_reg = r"^-?(\d+\/\d+|\d)( *[\-*/+] *-?(\d+\/\d+|\d))* *$"
 
     def __init__(self):
         self.compSigns = {
@@ -25,7 +25,7 @@ class FractionParser:
         return self._compute(string)
 
     def _compute(self, string: str):
-        string = string.strip(")").strip("(")
+        string = string.strip(")").strip("(").strip()
         parts = [x.group(0) for x in re.finditer(self.divide_reg, string)]
         parts = self._find_negative(parts)
         self._validate(string)
