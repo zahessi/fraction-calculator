@@ -108,4 +108,10 @@ class Fraction:
         self._bottom = a
 
     def __repr__(self):
-        return "%d/%d" % (self.top, self.bottom) if self.bottom != 1 else str(self.top)
+        if self.bottom == 1:
+            text = str(self.top)
+        elif self.top == 0:
+            text = "0"
+        else:
+            text = "%d/%d" % (self.top, self.bottom)
+        return text

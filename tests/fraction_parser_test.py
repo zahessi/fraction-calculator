@@ -69,6 +69,11 @@ class FractionParserTest(unittest.TestCase):
 
         self.assertEqual(f.process("7/6 - 16/7"), "-47/42")
 
+    def test_computing8(self):
+        f = FractionParser()
+
+        self.assertEqual(f.process("1/2 - 1/2"), "0")
+
     def test_computing_complex(self):
         f = FractionParser()
 
