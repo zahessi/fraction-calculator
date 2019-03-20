@@ -5,7 +5,7 @@ from fraction import Fraction
 class FractionParser:
     divide_reg = r"((\d+\/\d+)|\d+)|[+\-\/*]"
     inner_parenth_reg = r"\([^()]+\)"
-    final_reg = r"^\d+\/\d+|\d$"
+    final_reg = r"^-?(\d+\/\d+|\d)$"
     valid_reg = r"^-?(\d+\/\d+|\d)( *[\-*/+] *-?(\d+\/\d+|\d))* *$"
 
     def __init__(self):
@@ -25,18 +25,18 @@ class FractionParser:
         return self._compute(string)
 
     def _compute(self, string: str):
-        string = string.strip(")").strip("(").strip()
-        parts = [x.group(0) for x in re.finditer(self.divide_reg, string)]
-        parts = self._find_negative(parts)
-        self._validate(string)
+        if re.match(r"\(.*\)", string):
+            string = string.strip(")").strip("(").strip()
+        self._validate(string.strip())
+        parts = self._find_negative([x.group(0) for x in re.finditer(self.divide_reg, string)])
 
-        for oper in self.operands:
-            while parts.__contains__(oper):
+        for operand in self.operands:
+            while parts.__contains__(operand):
                 try:
-                    if oper in parts:
-                        index = parts.index(oper)
-                        result = repr(self.compSigns[oper](Fraction.fromstring(parts[index - 1]),
-                                                           Fraction.fromstring(parts[index + 1])))
+                    if operand in parts:
+                        index = parts.index(operand)
+                        result = repr(self.compSigns[operand](Fraction.fromstring(parts[index - 1]),
+                                                              Fraction.fromstring(parts[index + 1])))
                         parts[index - 1:index + 2] = [result]
                 except IndexError:
                     raise ValueError("Not valid expression")
