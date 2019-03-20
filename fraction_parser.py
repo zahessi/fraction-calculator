@@ -4,9 +4,9 @@ from fraction import Fraction
 
 class FractionParser:
     divide_reg = r"((\d+\/\d+)|\d+)|[+\-\/*]"
-    inner_parenth_reg = r"\([^()]+\)"
+    inner_parentheses_reg = r"\([^()]+\)"
     final_reg = r"^-?(\d+\/\d+|\d)$"
-    valid_reg = r"^-?(\d+\/\d+|\d)( *[\-*/+] *-?(\d+\/\d+|\d))* *$"
+    valid_reg = r"^-?(\d+\/\d+|\d+)( *[\-*\/+] *-?(\d+\/\d+|\d+))* *$"
 
     def __init__(self):
         self.compSigns = {
@@ -19,8 +19,8 @@ class FractionParser:
         self.operands = ["*", "/", "+", "-"]
 
     def process(self, string: str):
-        while re.findall(self.inner_parenth_reg, string):
-            inner = next(re.finditer(self.inner_parenth_reg, string)).group(0)
+        while re.findall(self.inner_parentheses_reg, string):
+            inner = next(re.finditer(self.inner_parentheses_reg, string)).group(0)
             string = string.replace(inner, f" {self._compute(inner)} ", 1)
         return self._compute(string)
 

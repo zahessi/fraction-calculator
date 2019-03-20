@@ -73,7 +73,12 @@ class FractionParserTest(unittest.TestCase):
         f = FractionParser()
 
         with self.assertRaises(ValueError):
-            print(f.process("1/2 - 1/2("))
+            f.process("1/2 - 1/2(")
+
+    def test_computing9(self):
+        f = FractionParser()
+
+        self.assertEqual(f.process("(((42)))"), "42")
 
     def test_computing_complex(self):
         f = FractionParser()
