@@ -1,8 +1,8 @@
 import unittest
 
 # import test modules
-from fraction_classes import tests as fraction_test
-import fraction_classes.tests.fraction_parser_test as parser_test
+from fraction_classes import fraction_tests as fraction_test
+import fraction_classes.fraction_tests.fraction_parser_test as parser_test
 
 
 class TestRunner:
@@ -17,5 +17,5 @@ class TestRunner:
         for test in self.test_cases:
             self.suite.addTest(self.loader.loadTestsFromModule(test))
         result = self.runner.run(self.suite)
-        return result.failures if result.failures else None
+        return result.failures
 

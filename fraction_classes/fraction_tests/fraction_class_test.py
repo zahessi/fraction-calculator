@@ -30,7 +30,7 @@ class FractionInitTests(unittest.TestCase):
 
     def test_repr_of_class(self):
         a = Fraction(0, 5)
-        self.assertEqual(repr(a), "0/5")
+        self.assertEqual(repr(a), "0")
 
     def test_init_from_string(self):
         a = Fraction.fromstring("0/5")
