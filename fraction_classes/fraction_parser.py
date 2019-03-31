@@ -32,14 +32,11 @@ class FractionParser:
 
         for operand in self.operands:
             while parts.__contains__(operand):
-                try:
-                    if operand in parts:
-                        index = parts.index(operand)
-                        result = repr(self.compSigns[operand](Fraction.fromstring(parts[index - 1]),
-                                                              Fraction.fromstring(parts[index + 1])))
-                        parts[index - 1:index + 2] = [result]
-                except IndexError:
-                    raise ValueError("Not valid expression")
+                if operand in parts:
+                    index = parts.index(operand)
+                    result = repr(self.compSigns[operand](Fraction.fromstring(parts[index - 1]),
+                                                          Fraction.fromstring(parts[index + 1])))
+                    parts[index - 1:index + 2] = [result]
         return parts[0]
 
     def _find_negative(self, arr):
