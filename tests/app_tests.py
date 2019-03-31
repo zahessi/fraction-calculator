@@ -1,5 +1,6 @@
-import unittest
 import json
+import unittest
+
 from web import app
 
 
@@ -32,14 +33,14 @@ class ApplicationTest(unittest.TestCase):
             "equation": "1/2 - 1/2("
         }), content_type="application/json")
         self.assertTrue(resp.status_code == 400)
-        self.assertTrue(resp.get_data() == b'{"error":"Not allowed symbols or sequence"}\n')
+        self.assertTrue(resp.get_data() == b'{"equation":"1/2 - 1/2(","error":"Not allowed symbols or sequence"}\n')
 
     def test_invalid_expr1(self):
         resp = self.client.post("/calc", data=json.dumps({
             "equation": "1/5 + 1/5 + "
         }), content_type="application/json")
         self.assertTrue(resp.status_code == 400)
-        self.assertTrue(resp.get_data() == b'{"error":"Not allowed symbols or sequence"}\n')
+        self.assertTrue(resp.get_data() == b'{"equation":"1/5 + 1/5 + ","error":"Not allowed symbols or sequence"}\n')
 
     def test_invalid_content_type(self):
         resp = self.client.post("/calc", data=json.dumps({

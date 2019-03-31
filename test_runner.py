@@ -1,12 +1,12 @@
 import unittest
 
 # import test modules
-from fraction_classes import fraction_tests as fraction_test
-import fraction_classes.fraction_tests.fraction_parser_test as parser_test
+from tests import fraction_class_test
+from tests import fraction_parser_test
 
 
 class TestRunner:
-    test_cases = [fraction_test, parser_test]
+    test_cases = [fraction_parser_test, fraction_class_test]
 
     def __init__(self):
         self.loader = unittest.TestLoader()
@@ -19,3 +19,6 @@ class TestRunner:
         result = self.runner.run(self.suite)
         return result.failures
 
+
+if __name__ == "__main__":
+    TestRunner().run()

@@ -1,0 +1,2 @@
+import tests.fraction_parser_test
+import tests.fraction_class_test

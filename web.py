@@ -1,6 +1,7 @@
 from flask import Flask, jsonify, request, abort
 
-from fraction_classes import TestRunner, FractionParser
+from fraction_classes import FractionParser
+from test_runner import TestRunner
 
 app = Flask(__name__)
 
@@ -9,6 +10,15 @@ app = Flask(__name__)
 def check_if_json():
     if request.method == "POST" and request.headers["content-type"] != "application/json":
         abort(400)
+
+
+@app.route("/", methods=["GET"])
+def index():
+    return """<h1>Small fraction calculator app.</h1><br> 
+/healthcheck (GET) \t-\t info on if system is OK<br>
+/calc (POST - {"equation": "$equation"} \t-\t returns the result of calculation in the format
+ {\"equation\": "$equation", "result": "$result"}<br> 
+"""
 
 
 @app.route("/healthcheck", methods=["GET"])
@@ -31,7 +41,7 @@ def calc():
     try:
         result = parser.process(equation)
     except ValueError as e:
-        return jsonify({"error": str(e)}), 400
+        return jsonify({"equation": equation, "error": str(e)}), 400
 
     return jsonify({
         "equation": equation,
@@ -40,4 +50,4 @@ def calc():
 
 
 if __name__ == "__main__":
-    app.run()
+    app.run(host="0.0.0.0")
